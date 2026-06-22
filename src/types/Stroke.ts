@@ -1,8 +1,8 @@
-export interface Point {
+export type Point = {
   x: number;
   y: number;
-}
+};
 
-export interface Stroke {
+export type Stroke = {
   points: Point[];
-}
+};
