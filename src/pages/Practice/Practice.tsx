@@ -1,24 +1,40 @@
 import { useState } from "react";
+
 import CanvasBoard from "../../components/layout/CanvasBoard/CanvasBoard";
-import { KATAKANAS } from "../../data/Katakanas";
+
 import type { Katakana } from "../../types/Katakana";
 
+import { getAvailableKatakanas } from "../../utils/katakana/getAvailableKatakanas";
+
 import styles from "./Practice.module.css";
+
+const availableKatakanas = getAvailableKatakanas();
 
 function getRandomKatakana(current?: Katakana): Katakana {
   let next: Katakana;
 
   do {
-    next = KATAKANAS[Math.floor(Math.random() * KATAKANAS.length)];
-  } while (current && next.id === current.id && KATAKANAS.length > 1);
+    next =
+      availableKatakanas[
+        Math.floor(Math.random() * availableKatakanas.length)
+      ];
+  } while (
+    current &&
+    next.id === current.id &&
+    availableKatakanas.length > 1
+  );
 
   return next;
 }
 
 export default function Practice() {
-  const [currentKatakana, setCurrentKatakana] = useState(() =>
+  const [currentKatakana, setCurrentKatakana] = useState<Katakana>(() =>
     getRandomKatakana()
   );
+
+  const handleNext = () => {
+    setCurrentKatakana((prev) => getRandomKatakana(prev));
+  };
 
   return (
     <main className={styles.page}>
@@ -54,9 +70,7 @@ export default function Practice() {
         <div className={styles.board}>
           <CanvasBoard
             katakana={currentKatakana}
-            onNext={() =>
-              setCurrentKatakana(getRandomKatakana(currentKatakana))
-            }
+            onNext={handleNext}
           />
         </div>
       </section>

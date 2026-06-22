@@ -1,16 +1,25 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "./CanvasBoard.module.css";
 
 import type { Katakana } from "../../../types/Katakana";
+import type { Stroke } from "../../../types/Stroke";
 
-import { compareKatakana } from "../../../utils/compareKatakana";
+import { compareDrawing } from "../../../utils/drawing/compareDrawing";
+import { normalizeDrawing } from "../../../utils/drawing/normalize";
+import { simplifyDrawing } from "../../../utils/drawing/simplify";
+
+import { KatakanaComparisonLogger } from "../../../utils/drawing/KatakanaComparisonLogger";
+import { renderStrokesToImage } from "../../../utils/drawing/renderStrokesToImage";
 
 import RoundScore from "../RoundScore/RoundScore";
+
+type DebugData = {
+  template: Stroke[];
+  user: Stroke[];
+  templateImage: string;
+  userImage: string;
+} | null;
 
 type Props = {
   katakana: Katakana;
@@ -21,28 +30,24 @@ export default function CanvasBoard({
   katakana,
   onNext,
 }: Props) {
-  const canvasRef =
-    useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [drawing, setDrawing] =
-    useState(false);
+  const [drawing, setDrawing] = useState(false);
+  const [strokes, setStrokes] = useState<Stroke[]>([]);
+  const currentStroke = useRef<Stroke>({ points: [] });
 
-  const [score, setScore] =
-    useState<number | null>(null);
+  const [score, setScore] = useState<number | null>(null);
+  const [showScore, setShowScore] = useState(false);
 
-  const [showScore, setShowScore] =
-    useState(false);
+  const [userDrawing, setUserDrawing] = useState("");
 
-  const [userDrawing, setUserDrawing] =
-    useState("");
+  const [debugData, setDebugData] = useState<DebugData>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
-
     if (!ctx) return;
 
     ctx.lineWidth = 12;
@@ -51,90 +56,102 @@ export default function CanvasBoard({
     ctx.strokeStyle = "black";
   }, []);
 
-  const startDrawing = (
-    event: React.MouseEvent<HTMLCanvasElement>
-  ) => {
-    const canvas = canvasRef.current;
+  function getPos(event: React.MouseEvent<HTMLCanvasElement>) {
+    const canvas = canvasRef.current!;
+    const rect = canvas.getBoundingClientRect();
 
+    return {
+      x: (event.clientX - rect.left) / rect.width,
+      y: (event.clientY - rect.top) / rect.height,
+    };
+  }
+
+  const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
-
     if (!ctx) return;
 
-    const rect =
-      canvas.getBoundingClientRect();
+    const pos = getPos(event);
 
     ctx.beginPath();
+    ctx.moveTo(pos.x * canvas.width, pos.y * canvas.height);
 
-    ctx.moveTo(
-      event.clientX - rect.left,
-      event.clientY - rect.top
-    );
+    currentStroke.current = {
+      points: [pos],
+    };
 
     setDrawing(true);
   };
 
-  const draw = (
-    event: React.MouseEvent<HTMLCanvasElement>
-  ) => {
+  const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!drawing) return;
 
     const canvas = canvasRef.current;
-
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
-
     if (!ctx) return;
 
-    const rect =
-      canvas.getBoundingClientRect();
+    const pos = getPos(event);
 
-    ctx.lineTo(
-      event.clientX - rect.left,
-      event.clientY - rect.top
-    );
-
+    ctx.lineTo(pos.x * canvas.width, pos.y * canvas.height);
     ctx.stroke();
+
+    currentStroke.current.points.push(pos);
   };
 
   const stopDrawing = () => {
+    if (!drawing) return;
+
     setDrawing(false);
+
+    setStrokes((prev) => [...prev, currentStroke.current]);
   };
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
-
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
-
     if (!ctx) return;
 
-    ctx.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    setStrokes([]);
+    currentStroke.current = { points: [] };
   };
 
   const handleConfirm = () => {
-    const canvas = canvasRef.current;
+    const template = katakana.template;
 
-    if (!canvas) return;
-
-    const result = compareKatakana(
-      canvas,
-      katakana.symbol
+    const processedUser = normalizeDrawing(
+      simplifyDrawing(strokes)
     );
+
+    const result = compareDrawing(processedUser, template);
+    const finalScore = Math.round(result * 100);
+
+    setScore(finalScore);
 
     setUserDrawing(
-      canvas.toDataURL("image/png")
+      canvasRef.current?.toDataURL("image/png") || ""
     );
 
-    setScore(result.score);
+    KatakanaComparisonLogger.log({
+      symbol: katakana.symbol,
+      user: processedUser,
+      template,
+      score: finalScore,
+    });
+
+    setDebugData({
+      template,
+      user: processedUser,
+      templateImage: renderStrokesToImage(template),
+      userImage: renderStrokesToImage(processedUser),
+    });
 
     setShowScore(true);
   };
@@ -154,24 +171,13 @@ export default function CanvasBoard({
         />
 
         <div className={styles.actions}>
-          <button onClick={clearCanvas}>
-            Limpar
-          </button>
-
-          <button onClick={handleConfirm}>
-            Confirmar
-          </button>
+          <button onClick={clearCanvas}>Limpar</button>
+          <button onClick={handleConfirm}>Confirmar</button>
         </div>
 
         <div className={styles.info}>
-          <p>
-            Traços: {katakana.strokeCount}
-          </p>
-
-          <p>
-            Dificuldade:{" "}
-            {katakana.difficulty}
-          </p>
+          <p>Traços: {katakana.strokeCount}</p>
+          <p>Dificuldade: {katakana.difficulty}</p>
         </div>
       </div>
 
@@ -179,20 +185,21 @@ export default function CanvasBoard({
         open={showScore}
         symbol={katakana.symbol}
         score={score ?? 0}
-        strokeCount={
-          katakana.strokeCount
-        }
-        difficulty={
-          katakana.difficulty
-        }
+        strokeCount={katakana.strokeCount}
+        difficulty={katakana.difficulty}
         userDrawing={userDrawing}
+        debugData={
+          debugData ?? {
+            template: [],
+            user: [],
+            templateImage: "",
+            userImage: "",
+          }
+        }
         onNext={() => {
           setShowScore(false);
-
           clearCanvas();
-
           setScore(null);
-
           onNext();
         }}
       />

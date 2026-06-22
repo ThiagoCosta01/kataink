@@ -1,37 +1,27 @@
 import type { Stroke } from "../../types/Stroke";
+import { getBounds } from "./bounds";
 
-export function getBounds(points: { x: number; y: number }[]) {
-  let minX = Infinity,
-    minY = Infinity,
-    maxX = -Infinity,
-    maxY = -Infinity;
-
-  for (const p of points) {
-    if (p.x < minX) minX = p.x;
-    if (p.y < minY) minY = p.y;
-    if (p.x > maxX) maxX = p.x;
-    if (p.y > maxY) maxY = p.y;
+export function normalizeDrawing(
+  strokes: Stroke[]
+): Stroke[] {
+  if (strokes.length === 0) {
+    return [];
   }
 
-  return {
-    minX,
-    minY,
-    width: maxX - minX || 1,
-    height: maxY - minY || 1,
-  };
-}
+  const allPoints = strokes.flatMap(
+    (stroke) => stroke.points
+  );
 
-export function normalizeStroke(stroke: Stroke): Stroke {
-  const bounds = getBounds(stroke.points);
+  const bounds = getBounds(allPoints);
 
-  return {
+  return strokes.map((stroke) => ({
     points: stroke.points.map((p) => ({
-      x: (p.x - bounds.minX) / bounds.width,
-      y: (p.y - bounds.minY) / bounds.height,
+      x:
+        (p.x - bounds.minX) /
+        bounds.width,
+      y:
+        (p.y - bounds.minY) /
+        bounds.height,
     })),
-  };
-}
-
-export function normalizeDrawing(strokes: Stroke[]): Stroke[] {
-  return strokes.map(normalizeStroke);
+  }));
 }
