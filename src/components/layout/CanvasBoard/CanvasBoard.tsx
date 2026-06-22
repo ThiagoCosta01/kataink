@@ -19,10 +19,13 @@ import { KatakanaComparisonLogger } from "../../../utils/drawing/KatakanaCompari
 import { renderStrokesToImage } from "../../../utils/drawing/renderStrokesToImage";
 
 import RoundScore from "../RoundScore/RoundScore";
+import type { PracticeSettings } from "../../../types/PracticeSettings";
 
 type Props = {
   katakana: Katakana;
   onNext: () => void;
+
+  settings: PracticeSettings;
 };
 
 export default function CanvasBoard({

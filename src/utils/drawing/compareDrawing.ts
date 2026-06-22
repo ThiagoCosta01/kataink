@@ -1,9 +1,9 @@
 import type { Stroke } from "../../types/Stroke";
 
-function compareStroke(
+function calculateStrokeSimilarity(
   user: Stroke,
   template: Stroke
-) {
+): number {
   const len = Math.min(
     user.points.length,
     template.points.length
@@ -38,10 +38,42 @@ function compareStroke(
   );
 }
 
+function compareStroke(
+  user: Stroke,
+  template: Stroke,
+  respectDirection: boolean
+): number {
+  const normalScore =
+    calculateStrokeSimilarity(
+      user,
+      template
+    );
+
+  if (respectDirection) {
+    return normalScore;
+  }
+
+  const reversedUser: Stroke = {
+    points: [...user.points].reverse(),
+  };
+
+  const reversedScore =
+    calculateStrokeSimilarity(
+      reversedUser,
+      template
+    );
+
+  return Math.max(
+    normalScore,
+    reversedScore
+  );
+}
+
 export function compareDrawing(
   user: Stroke[],
-  template: Stroke[]
-) {
+  template: Stroke[],
+  respectDirection = false
+): number {
   if (
     user.length === 0 ||
     template.length === 0
@@ -54,24 +86,30 @@ export function compareDrawing(
     template.length
   );
 
-  let score = 0;
+  let totalScore = 0;
 
   for (let i = 0; i < len; i++) {
-    score += compareStroke(
+    totalScore += compareStroke(
       user[i],
-      template[i]
+      template[i],
+      respectDirection
     );
   }
 
-  score /= len;
+  const averageScore =
+    totalScore / len;
+
+  const strokeDifference =
+    Math.abs(
+      user.length -
+        template.length
+    );
 
   const strokePenalty =
-    Math.abs(
-      user.length - template.length
-    ) * 0.1;
+    strokeDifference * 0.1;
 
   return Math.max(
     0,
-    score - strokePenalty
+    averageScore - strokePenalty
   );
 }
