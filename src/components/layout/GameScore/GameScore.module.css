@@ -48,7 +48,7 @@
   gap: 10px;
 }
 
-.stats > div {
+.stats>div {
   padding: 14px;
   border-left:
     4px solid var(--color-primary);
@@ -65,7 +65,7 @@
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.stats > div:hover {
+.stats>div:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
@@ -110,7 +110,6 @@
   flex-direction: column;
   gap: 8px;
 
-  max-height: 150px;
   overflow-y: auto;
 
   scrollbar-width: thin;

@@ -67,71 +67,57 @@ export default function PracticePage() {
   }
 
   return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <div>
-          <h1 className={styles.title}>KataInk</h1>
-          <p className={styles.subtitle}>
-            Desenhe o caractere mostrado.
-          </p>
-        </div>
-      </header>
-      <section className={styles.card}>
-        <div className={styles.left}>
+    <main className={styles.container}>
 
+      <div className={styles.content}>
 
-        </div>
-
-        <div className={styles.center}>
-          <div className={styles.katakanaBox}>
-            <div className={styles.katakana}>
-              {currentKatakana.symbol}
-            </div>
-
-            <div className={styles.info}>
-              <span className={styles.badge}>
-                ID: {currentKatakana.id}
-              </span>
-
-              <span className={styles.badge}>
-                Traços: {currentKatakana.strokeCount}
-              </span>
-
-              <span className={styles.badge}>
-                Dificuldade: {currentKatakana.difficulty}
-              </span>
-            </div>
-            <PracticeSettings
-              settings={settings}
-              onChange={setSettings}
-            />
+        <div className={styles.katakanaBox}>
+          <div className={styles.katakana}>
+            {currentKatakana.symbol}
+          </div>
+          <div className={styles.katanaId}>
+            {currentKatakana.id}
           </div>
 
-          <div className={styles.right} >
+          <div className={styles.info}>
 
-            <div className={styles.board}>
-              <CanvasBoard
-                katakana={currentKatakana}
-                settings={settings}
-                onScore={(score) =>
-                  addScore(score, currentKatakana.id)
-                }
-                onNext={handleNext}
-              />
-            </div>
-
-            <GameScore
-              currentRound={currentRound}
-              totalRounds={totalRounds}
-              totalScore={totalScore}
-              averageScore={averageScore}
-              scores={scores}
-              finished={finished}
-            />
+            <span className={styles.badge}>
+              <p>
+                Traços: {currentKatakana.strokeCount} | {currentKatakana.difficulty}
+              </p>
+            </span>
           </div>
-
+          <PracticeSettings
+            settings={settings}
+            onChange={setSettings}
+          />
         </div>
-      </section>
+
+        <div className={styles.boardBox}>
+          <CanvasBoard
+            katakana={currentKatakana}
+            settings={settings}
+            onScore={(score) =>
+              addScore(score, currentKatakana.id)
+            }
+            onNext={handleNext}
+          />
+        </div>
+
+        <div className={styles.scoreBox}>
+
+          <GameScore
+            currentRound={currentRound}
+            totalRounds={totalRounds}
+            totalScore={totalScore}
+            averageScore={averageScore}
+            scores={scores}
+            finished={finished}
+          />
+        </div>
+
+      </div>
+
     </main >
   );
 }

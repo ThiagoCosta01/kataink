@@ -1,75 +1,36 @@
-.page {
-  background: var(--color-background-dark);
+.container {
+
   width: 100%;
+  margin-top: 34px;
 }
 
-.card {
-  background: var(--color-background-dark);
-  max-width: 100%;
-  border: 1px solid rgba(255, 255, 255, .15);
-  align-items: center;
-  justify-content: center;
-  display: flex;
-
-  box-shadow:
-    0 30px 80px rgba(0, 0, 0, .25),
-    0 10px 30px rgba(0, 0, 0, .12);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding-bottom: 18px;
-
-  border-bottom: 1px solid rgba(255, 0, 0, 0.08);
-}
-
-.title {
-  margin: 0;
-
-  font-size: 2rem;
-  font-weight: 800;
-
-  color: var(--color-primary);
-}
-
-.subtitle {
-  margin-top: 4px;
-
-  .subtitle {
-    color: #e22f2f;
-  }
-
-  font-size: 0.95rem;
-}
-
-.center {
-  display: grid;
-
-  grid-template-columns:
-    220px minmax(450px, 1fr) 340px;
-
+.content {
   gap: 24px;
-
-  align-items: start;
+  min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
 }
-
-/* =========================
-   KATAKANA
-========================= */
 
 .katakanaBox {
+  padding: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  min-height: 100%;
+  border-radius: 24px;
+  background:
+    linear-gradient(185deg,
+      #ffffffb1,
+      #a9aebd3a);
+
 }
 
 .katakana {
-  width: 220px;
-  height: 220px;
+  width: 200px;
+  height: 200px;
 
   display: flex;
   justify-content: center;
@@ -100,6 +61,19 @@
   gap: 10px;
 }
 
+.katakanaInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.katanaId {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  text-transform: uppercase;
+}
+
 .badge {
   padding: 12px 16px;
 
@@ -112,18 +86,13 @@
     1px solid rgba(10, 78, 121, .15);
 
   color:
-    var(--color-secondary);
+    var(--color-text-dark);
 
-  font-weight: 600;
 }
 
-/* =========================
-   CANVAS
-========================= */
-
-.board {
+.boardBox {
   padding: 24px;
-
+  max-height: fit-content;
   border-radius: 24px;
 
   background:
@@ -138,22 +107,15 @@
     inset 0 1px 0 rgba(255, 255, 255, .9);
 }
 
-/* =========================
-   SCORE
-========================= */
+.scoreBox{ 
 
-.right {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
+  max-height: fit-content;
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
+
 
 @media (max-width: 1200px) {
-  .center {
+  .katakanaInfo {
     grid-template-columns:
       1fr;
   }
@@ -168,7 +130,7 @@
     width: auto;
   }
 
-  .board {
+  .boardBox {
     min-height: auto;
   }
 }

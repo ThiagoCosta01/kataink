@@ -19,7 +19,7 @@ import { renderStrokesToImage } from "../../../utils/drawing/renderStrokesToImag
 
 import { KatakanaComparisonLogger } from "../../../utils/drawing/KatakanaComparisonLogger";
 
-import RoundScore from "../RoundScore/RoundScore";
+import RoundScore from "../../ui/RoundScore/RoundScore";
 
 const CANVAS_SIZE = 400;
 

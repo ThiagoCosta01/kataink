@@ -5,20 +5,18 @@ import type { PracticeScore } from "../types/PracticeScore";
 const TOTAL_ROUNDS = 10;
 
 export function usePracticeScore() {
-  const [scores, setScores] = useState<
-    PracticeScore[]
-  >([]);
+  const [scores, setScores] = useState<PracticeScore[]>([]);
 
   const addScore = (score: number, katakana: string) => {
-  setScores((prev) => [
-    ...prev,
-    {
-      round: prev.length + 1,
-      score,
-      katakana,
-    },
-  ]);
-};
+    setScores((prev) => [
+      ...prev,
+      {
+        round: prev.length + 1,
+        score,
+        katakana,
+      },
+    ]);
+  };
 
   const reset = () => {
     setScores([]);
@@ -43,11 +41,9 @@ export function usePracticeScore() {
     );
   }, [scores, totalScore]);
 
-  const currentRound =
-    scores.length + 1;
+  const currentRound = scores.length + 1;
 
-  const finished =
-    scores.length >= TOTAL_ROUNDS;
+  const finished = scores.length >= TOTAL_ROUNDS;
 
   return {
     scores,
