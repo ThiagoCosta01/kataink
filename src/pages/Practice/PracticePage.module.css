@@ -1,0 +1,201 @@
+.page {
+  background: var(--color-background-dark);
+  width: 100%;
+}
+
+.card {
+  background: var(--color-background-dark);
+  max-width: 100%;
+  border: 1px solid rgba(255, 255, 255, .15);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, .25),
+    0 10px 30px rgba(0, 0, 0, .12);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid rgba(255, 0, 0, 0.08);
+}
+
+.title {
+  margin: 0;
+
+  font-size: 2rem;
+  font-weight: 800;
+
+  color: var(--color-primary);
+}
+
+.subtitle {
+  margin-top: 4px;
+
+  .subtitle {
+    color: #e22f2f;
+  }
+
+  font-size: 0.95rem;
+}
+
+.center {
+  display: grid;
+
+  grid-template-columns:
+    220px minmax(450px, 1fr) 340px;
+
+  gap: 24px;
+
+  align-items: start;
+}
+
+/* =========================
+   KATAKANA
+========================= */
+
+.katakanaBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.katakana {
+  width: 220px;
+  height: 220px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 8rem;
+
+  color: var(--color-primary);
+
+  background:
+    linear-gradient(180deg,
+      #ffffff,
+      #f7f7f7);
+
+  border-radius: 24px;
+
+  border: 2px solid rgba(173, 44, 54, .15);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, .08);
+}
+
+.info {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.badge {
+  padding: 12px 16px;
+
+  border-radius: 12px;
+
+  background:
+    rgb(255, 255, 255);
+
+  border:
+    1px solid rgba(10, 78, 121, .15);
+
+  color:
+    var(--color-secondary);
+
+  font-weight: 600;
+}
+
+/* =========================
+   CANVAS
+========================= */
+
+.board {
+  padding: 24px;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(180deg,
+      #ffffff,
+      #fafafa);
+
+  border:
+    1px solid rgba(2, 37, 62, .08);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+/* =========================
+   SCORE
+========================= */
+
+.right {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1200px) {
+  .center {
+    grid-template-columns:
+      1fr;
+  }
+
+  .katakanaBox {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info {
+    width: auto;
+  }
+
+  .board {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .katakana {
+    width: 160px;
+    height: 160px;
+
+    font-size: 6rem;
+  }
+
+  .katakanaBox {
+    flex-direction: column;
+  }
+}

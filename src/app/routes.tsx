@@ -1,16 +1,20 @@
-import { createBrowserRouter } from "react-router-dom";
+import {
+  createBrowserRouter,
+} from "react-router-dom";
 
+import Layout from "./Layout";
 
-import Practice from "../pages/Practice/Practice";
+import PracticePage from "../pages/Practice/PracticePage";
 
-
-export const router = createBrowserRouter([
+export const router =
+  createBrowserRouter([
     {
-        path: "/practice",
-        element: <Practice />,
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <PracticePage />,
+        },
+      ],
     },
-    {
-        path: "/*",
-        element: <Practice />,
-    },
-]);
+  ]);

@@ -8,28 +8,32 @@ import styles from "./CanvasBoard.module.css";
 
 import type { Katakana } from "../../../types/Katakana";
 import type { Stroke } from "../../../types/Stroke";
+import type { PracticeSettings } from "../../../types/PracticeSettings";
 
 import { compareDrawing } from "../../../utils/drawing/compareDrawing";
 import { normalizeDrawing } from "../../../utils/drawing/normalize";
 import { simplifyDrawing } from "../../../utils/drawing/simplify";
 import { resampleDrawing } from "../../../utils/drawing/resample";
 
-import { KatakanaComparisonLogger } from "../../../utils/drawing/KatakanaComparisonLogger";
-
 import { renderStrokesToImage } from "../../../utils/drawing/renderStrokesToImage";
 
+import { KatakanaComparisonLogger } from "../../../utils/drawing/KatakanaComparisonLogger";
+
 import RoundScore from "../RoundScore/RoundScore";
-import type { PracticeSettings } from "../../../types/PracticeSettings";
+
+const CANVAS_SIZE = 400;
 
 type Props = {
   katakana: Katakana;
-  onNext: () => void;
-
   settings: PracticeSettings;
+  onScore: (score: number) => void;
+  onNext: () => void;
 };
 
 export default function CanvasBoard({
   katakana,
+  settings,
+  onScore,
   onNext,
 }: Props) {
   const canvasRef =
@@ -57,23 +61,36 @@ export default function CanvasBoard({
 
   const [debugData, setDebugData] =
     useState({
-      template: [] as Stroke[],
       user: [] as Stroke[],
-      templateImage: "",
+      template: [] as Stroke[],
       userImage: "",
+      templateImage: "",
     });
 
   useEffect(() => {
     const canvas = canvasRef.current;
 
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
-    const ctx =
-      canvas.getContext("2d");
+    const dpr = window.devicePixelRatio || 1;
 
-    if (!ctx) return;
+    canvas.width = CANVAS_SIZE * dpr;
+    canvas.height = CANVAS_SIZE * dpr;
 
-    ctx.lineWidth = 12;
+    canvas.style.width = `${CANVAS_SIZE}px`;
+    canvas.style.height = `${CANVAS_SIZE}px`;
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      return;
+    }
+
+    ctx.scale(dpr, dpr);
+
+    ctx.lineWidth = 18;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.strokeStyle = "black";
@@ -103,20 +120,24 @@ export default function CanvasBoard({
   ) => {
     const canvas = canvasRef.current;
 
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx =
       canvas.getContext("2d");
 
-    if (!ctx) return;
+    if (!ctx) {
+      return;
+    }
 
     const pos = getPos(event);
 
     ctx.beginPath();
 
     ctx.moveTo(
-      pos.x * canvas.width,
-      pos.y * canvas.height
+      pos.x * CANVAS_SIZE,
+      pos.y * CANVAS_SIZE
     );
 
     currentStroke.current = {
@@ -129,23 +150,34 @@ export default function CanvasBoard({
   const draw = (
     event: React.MouseEvent<HTMLCanvasElement>
   ) => {
-    if (!drawing) return;
+    if (!drawing) {
+      return;
+    }
 
     const canvas = canvasRef.current;
 
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx =
       canvas.getContext("2d");
 
-    if (!ctx) return;
+    if (!ctx) {
+      return;
+    }
 
     const pos = getPos(event);
 
     ctx.lineTo(
-      pos.x * canvas.width,
-      pos.y * canvas.height
+      pos.x * CANVAS_SIZE,
+      pos.y * CANVAS_SIZE
     );
+    ctx.lineWidth = 10;
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "black";
 
     ctx.stroke();
 
@@ -155,7 +187,9 @@ export default function CanvasBoard({
   };
 
   const stopDrawing = () => {
-    if (!drawing) return;
+    if (!drawing) {
+      return;
+    }
 
     setDrawing(false);
 
@@ -173,12 +207,16 @@ export default function CanvasBoard({
   const clearCanvas = () => {
     const canvas = canvasRef.current;
 
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     const ctx =
       canvas.getContext("2d");
 
-    if (!ctx) return;
+    if (!ctx) {
+      return;
+    }
 
     ctx.clearRect(
       0,
@@ -194,6 +232,82 @@ export default function CanvasBoard({
     };
   };
 
+  const redrawCanvas = (
+    remainingStrokes: Stroke[]
+  ) => {
+    const canvas = canvasRef.current;
+
+    if (!canvas) {
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      return;
+    }
+
+    ctx.clearRect(
+      0,
+      0,
+      CANVAS_SIZE,
+      CANVAS_SIZE
+    );
+
+    remainingStrokes.forEach((stroke) => {
+      if (stroke.points.length < 2) {
+        return;
+      }
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        stroke.points[0].x *
+        CANVAS_SIZE,
+        stroke.points[0].y *
+        CANVAS_SIZE
+      );
+
+      for (
+        let i = 1;
+        i < stroke.points.length;
+        i++
+      ) {
+        ctx.lineTo(
+          stroke.points[i].x *
+          CANVAS_SIZE,
+          stroke.points[i].y *
+          CANVAS_SIZE
+        );
+      }
+
+      ctx.stroke();
+    });
+  };
+
+  const clearLastStrokeCanvas = () => {
+    if (strokes.length === 0) {
+      return;
+    }
+
+    const remainingStrokes =
+      strokes.slice(0, -1);
+
+    setStrokes(remainingStrokes);
+
+    redrawCanvas(remainingStrokes);
+  };
+
+  const undo = () => {
+  setStrokes((prev) => {
+    const next = prev.slice(0, -1);
+
+    redrawCanvas(next);
+
+    return next;
+  });
+};
+
   const handleConfirm = () => {
     const template =
       katakana.template;
@@ -203,8 +317,9 @@ export default function CanvasBoard({
       template.length === 0
     ) {
       alert(
-        "Este caractere ainda não possui template."
+        "Este katakana ainda não possui template."
       );
+
       return;
     }
 
@@ -225,13 +340,18 @@ export default function CanvasBoard({
     const similarity =
       compareDrawing(
         processedUser,
-        processedTemplate
+        processedTemplate,
+        settings.respectStrokeDirection
       );
 
     const finalScore =
-      Math.round(similarity * 100);
+      Math.round(
+        similarity * 100
+      );
 
     setScore(finalScore);
+
+    onScore(finalScore);
 
     setUserDrawing(
       canvasRef.current?.toDataURL(
@@ -270,13 +390,9 @@ export default function CanvasBoard({
 
   return (
     <>
-      <div
-        className={styles.container}
-      >
+      <div className={styles.container}>
         <canvas
           ref={canvasRef}
-          width={400}
-          height={400}
           className={styles.canvas}
           onMouseDown={
             startDrawing
@@ -290,38 +406,17 @@ export default function CanvasBoard({
           }
         />
 
-        <div
-          className={styles.actions}
-        >
-          <button
-            onClick={clearCanvas}
-          >
+        <div className={styles.actions}>
+          <button onClick={clearLastStrokeCanvas}>
+            Último traço
+          </button>
+          <button onClick={clearCanvas}>
             Limpar
           </button>
 
-          <button
-            onClick={handleConfirm}
-          >
+          <button onClick={handleConfirm}>
             Confirmar
           </button>
-        </div>
-
-        <div
-          className={styles.info}
-        >
-          <p>
-            Traços:{" "}
-            {
-              katakana.strokeCount
-            }
-          </p>
-
-          <p>
-            Dificuldade:{" "}
-            {
-              katakana.difficulty
-            }
-          </p>
         </div>
       </div>
 

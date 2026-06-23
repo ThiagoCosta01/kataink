@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./styles/globals.css";
 
 import App from "./app/App";
-
-import "./index.css";
 
 ReactDOM.createRoot(
   document.getElementById("root")!
