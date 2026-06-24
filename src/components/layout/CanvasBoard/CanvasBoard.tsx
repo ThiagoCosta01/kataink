@@ -298,16 +298,6 @@ export default function CanvasBoard({
     redrawCanvas(remainingStrokes);
   };
 
-  const undo = () => {
-  setStrokes((prev) => {
-    const next = prev.slice(0, -1);
-
-    redrawCanvas(next);
-
-    return next;
-  });
-};
-
   const handleConfirm = () => {
     const template =
       katakana.template;
