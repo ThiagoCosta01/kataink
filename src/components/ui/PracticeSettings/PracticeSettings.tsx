@@ -17,7 +17,7 @@ export default function PracticeSettings({
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>
-        Configurações
+        Opções
       </h3>
 
       <label className={styles.option}>

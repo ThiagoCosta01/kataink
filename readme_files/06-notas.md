@@ -9,17 +9,18 @@
 - 01/06/2025 - Thiago Costa - Nota inicial de exemplo
 
 ## A fazer: 
-- Melhorar Header, 
 - instruções sobre como jogar (em about), 
-- melhorar botões, 
 - terminar algoritmo de templates, 
 - finalizar no round 10, 
-- mandar notas configurações para o local storage 
+- mandar configurações para o local storage 
 - Adicionar multiplicação na pontuação para dificuldades e se tiver direção dos traços
-- ajustar/limitar alturas máximas
+- ajustar/limitar alturas máximas na PracticePage
 - media queries
+- Hospedar
+- Refatorar
 
 ## A fazer (menos importantes):
 - i18n
 - documentação
-- modo dark/claro 
+- adicionar áudio (menu shippuden) 
+- modo sem símbolo (desenhar com base nos nomes dos Katakanas)

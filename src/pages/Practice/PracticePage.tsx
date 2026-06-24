@@ -121,3 +121,4 @@ export default function PracticePage() {
     </main >
   );
 }
+

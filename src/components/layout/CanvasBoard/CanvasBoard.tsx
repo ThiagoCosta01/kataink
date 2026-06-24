@@ -408,7 +408,7 @@ export default function CanvasBoard({
 
         <div className={styles.actions}>
           <button onClick={clearLastStrokeCanvas}>
-            Último traço
+            Desfazer
           </button>
           <button onClick={clearCanvas}>
             Limpar

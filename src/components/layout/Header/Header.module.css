@@ -1,13 +1,14 @@
 .header {
   width: 100%;
-  height: 72px;
+  padding: 6px 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background-color: #ffffff;
+  background-color: var(--color-background-dark);
   border-bottom: 1px solid #e5e7eb;
+  color: rgba(255, 255, 255, 0.915);
 }
 
 .content {
@@ -18,14 +19,15 @@
   gap: 10px;
 }
 
-.brand{
-
-}
-
 .text {
   display: flex;
   flex-direction: column;
 }
+
+.text h1:hover {
+  color: var(--color-primary);
+}
+
 
 .text h1 {
   margin: 0;
@@ -34,14 +36,15 @@
   font-weight: 800;
   line-height: 1;
 
-  color: var(--color-primary);
+  color: var(--color-text-light);
 }
 
 .text span {
   margin-top: 0.2rem;
 
   font-size: 0.8rem;
-  color: #6b7280;
+
+  color: rgba(255, 255, 255, 0.712);
 }
 
 .nav {
@@ -54,7 +57,6 @@
   font-size: 0.95rem;
   font-weight: 500;
 
-  color: #374151;
   text-decoration: none;
 
   transition: color 0.2s ease;

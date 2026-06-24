@@ -81,13 +81,17 @@ table {
 
 :root {
   --color-primary: #AD2C36;
+
   --color-secondary: #0A4E79;
-  --color-tertiary: #02253E;
+  --color-secondary-hover: #02253E;
+
+  --color-tertiary: #2cad4e;
 
   --color-background-light: #E0D9E1;
   --color-background-dark: #0F181F;
 
-  --color-text: #111827;
+  --color-text-dark: #111827;
+  --color-text-light: #ffffff;
 
   --shadow-sm:
     0 2px 8px rgba(0, 0, 0, 0.08);

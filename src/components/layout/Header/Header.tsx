@@ -6,12 +6,12 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.content}>
 
-        <div className={styles.brand}>
+        <Link to="/" className={styles.brand}>
           <div className={styles.text}>
-            <h1>Kataink</h1>
+            <h1>KataInk</h1>
             <span>Prática de Escrita Katakana</span>
           </div>
-        </div>
+        </Link>
 
         <nav className={styles.nav}>
           <Link to="/" className={styles.link}>

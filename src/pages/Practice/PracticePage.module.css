@@ -107,57 +107,112 @@
     inset 0 1px 0 rgba(255, 255, 255, .9);
 }
 
-.scoreBox{ 
-
+.scoreBox {
   max-height: fit-content;
 }
 
-
+canvas {
+  touch-action: none;
+}
 
 @media (max-width: 1200px) {
-  .katakanaInfo {
-    grid-template-columns:
-      1fr;
+  .content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .katakanaBox,
+  .boardBox,
+  .scoreBox {
+    width: 100%;
   }
 
   .katakanaBox {
     flex-direction: row;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .info {
     width: auto;
+    min-width: 180px;
   }
 
-  .boardBox {
-    min-height: auto;
+  .katakana {
+    width: 180px;
+    height: 180px;
+    font-size: 7rem;
+  }
+
+  .boardBox,
+  .scoreBox {
+    max-height: none;
   }
 }
 
 @media (max-width: 768px) {
-  .page {
-    padding: 16px;
+  .container {
+    margin-top: 16px;
   }
 
-  .card {
-    padding: 20px;
-  }
-
-  .header {
-    flex-direction: column;
+  .content {
     gap: 16px;
-    align-items: flex-start;
-  }
-
-  .katakana {
-    width: 160px;
-    height: 160px;
-
-    font-size: 6rem;
   }
 
   .katakanaBox {
+    padding: 16px;
     flex-direction: column;
+  }
+
+  .katakana {
+    width: 150px;
+    height: 150px;
+    font-size: 5rem;
+  }
+
+  .katanaId {
+    font-size: 1rem;
+  }
+
+  .badge {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .boardBox {
+    padding: 16px;
+    overflow-x: auto;
+  }
+
+  .scoreBox {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .katakana {
+    width: 120px;
+    height: 120px;
+    font-size: 4rem;
+  }
+
+  .katanaId {
+    font-size: 0.9rem;
+  }
+
+  .badge {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .boardBox {
+    padding: 12px;
+  }
+
+  .canvas {
+    max-width: 100%;
+    height: auto;
   }
 }

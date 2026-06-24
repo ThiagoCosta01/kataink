@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -6,18 +8,31 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.content}>
-        <div className={styles.brand}>
-          <span className={styles.logo}>
-            KataInk
-          </span>
+        <div className={styles.topContainer}>
 
-          <span className={styles.separator}>
-            •
-          </span>
+          <div className={styles.brand}>
+            <span className={styles.logo}>
+              KataInk
+            </span>
 
-          <span className={styles.text}>
-            Treinamento de escrita Katakana
-          </span>
+            <span className={styles.separator}>
+              •
+            </span>
+
+            <span className={styles.text}>
+              Treinamento de escrita Katakana
+            </span>
+          </div>
+
+          <div className={styles.logoContainer}>
+            <Link to="https://github.com/thiagocosta/kataink" target="_blank" rel="noopener noreferrer">
+              <FaGithub />
+            </Link>
+
+            <Link to="https://github.com/ThiagoCosta01/kataink" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin />
+            </Link>
+          </div>
         </div>
 
         <div className={styles.info}>
@@ -30,10 +45,10 @@ export default function Footer() {
           </span>
 
           <span>
-            Desenvolvido com React +
-            TypeScript
+            Desenvolvido por Thiago Costa
           </span>
         </div>
+
       </div>
     </footer>
   );
