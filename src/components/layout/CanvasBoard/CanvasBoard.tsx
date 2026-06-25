@@ -28,6 +28,7 @@ type Props = {
   settings: PracticeSettings;
   onScore: (score: number) => void;
   onNext: () => void;
+  finished: boolean;
 };
 
 export default function CanvasBoard({
@@ -35,6 +36,7 @@ export default function CanvasBoard({
   settings,
   onScore,
   onNext,
+  finished
 }: Props) {
   const canvasRef =
     useRef<HTMLCanvasElement>(null);
@@ -128,6 +130,7 @@ export default function CanvasBoard({
 
     ctx.shadowBlur = 4;
   }
+
 
   const startDrawing = (
     event: React.PointerEvent<HTMLCanvasElement>
@@ -241,8 +244,6 @@ export default function CanvasBoard({
 
     points.push(pos);
   };
-
-
 
   const stopDrawing = () => {
     if (!drawing) {
@@ -477,6 +478,8 @@ export default function CanvasBoard({
     });
 
     setShowScore(true);
+
+
   };
 
   return (
@@ -521,6 +524,7 @@ export default function CanvasBoard({
         difficulty={
           katakana.difficulty
         }
+        finished={finished}
         userDrawing={userDrawing}
         debugData={debugData}
         onNext={() => {

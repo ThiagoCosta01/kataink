@@ -10,19 +10,18 @@
 
 ## A fazer: 
 - Terminar algoritmo de templates
-- Finalizar no round 10
-- Adicionar multiplicação na pontuação para dificuldades e se tiver direção dos traços
-- i18n
 
 ## Finalização: 
 - Instruções sobre como jogar (em about), 
-- Mandar configurações para o local storage 
 - Media queries
 - Refatorar
 
 
 ## A fazer (Extras Futuros):
+- i18n
 - documentação
 - adicionar áudio (menu shippuden) 
 - modo sem símbolo (desenhar com base nos nomes dos Katakanas)
+- Mandar configurações para o local storage 
 - Mudar estilo da pincelada (Perfect)
+- Adicionar multiplicação na pontuação para dificuldades e se tiver direção dos traços

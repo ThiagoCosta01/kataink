@@ -11,6 +11,7 @@ type Props = {
   strokeCount: number;
   difficulty: string;
   userDrawing: string;
+  finished: boolean;
   onNext: () => void;
 
   debugData: {
@@ -30,6 +31,7 @@ export default function RoundScore({
   userDrawing,
   onNext,
   debugData,
+  finished
 }: Props) {
   const [showDebug, setShowDebug] =
     useState(false);
@@ -57,7 +59,9 @@ export default function RoundScore({
             onClick={onNext}
             className={styles.nextButton}
           >
-            Próximo →
+            {finished
+              ? "Jogar novamente ↺"
+              : "Próximo →"}
           </button>
         </div>
 

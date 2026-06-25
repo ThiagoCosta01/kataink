@@ -41,6 +41,7 @@ export default function PracticePage() {
     averageScore,
     finished,
     addScore,
+    reset,
   } = usePracticeScore();
 
   const { settings, setSettings } = usePracticeSettings();
@@ -50,8 +51,18 @@ export default function PracticePage() {
   );
 
   const handleNext = () => {
-    setCurrentKatakana((prev) => getRandomKatakana(prev));
-  };
+  if (finished) {
+    reset();
+
+    setCurrentKatakana(getRandomKatakana());
+
+    return;
+  }
+
+  setCurrentKatakana((prev) =>
+    getRandomKatakana(prev)
+  );
+};
 
   if (AVAILABLE_KATAKANAS.length === 0) {
     return (
@@ -96,6 +107,7 @@ export default function PracticePage() {
         <div className={styles.boardBox}>
           <CanvasBoard
             katakana={currentKatakana}
+            finished={finished}
             settings={settings}
             onScore={(score) =>
               addScore(score, currentKatakana.id)
