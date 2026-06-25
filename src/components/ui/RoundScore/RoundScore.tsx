@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import styles from "./RoundScore.module.css";
 
 import type { Stroke } from "../../../types/Stroke";
@@ -30,32 +31,68 @@ export default function RoundScore({
   onNext,
   debugData,
 }: Props) {
-  const [showDebug, setShowDebug] = useState(false);
+  const [showDebug, setShowDebug] =
+    useState(false);
 
-  if (!open) return null;
+  if (!open) {
+    return null;
+  }
 
   const message =
     score >= 90
       ? "Excelente!"
       : score >= 70
-      ? "Muito bom!"
-      : score >= 50
-      ? "Continue praticando!"
-      : "Tente novamente!";
+        ? "Muito bom!"
+        : score >= 50
+          ? "Continue praticando!"
+          : "Tente novamente!";
 
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <h2>Resultado</h2>
+        <div className={styles.topBar}>
+          <h2>Resultado</h2>
+
+          <button
+            onClick={onNext}
+            className={styles.nextButton}
+          >
+            Próximo →
+          </button>
+        </div>
+
+        <div className={styles.scoreSection}>
+          <div className={styles.scoreCircle}>
+            {score}
+          </div>
+
+          <h3 className={styles.message}>
+            {message}
+          </h3>
+        </div>
+
+        <div className={styles.info}>
+          <span>
+            ✍️ {strokeCount} traços
+          </span>
+
+          <span>
+            📚 {difficulty}
+          </span>
+        </div>
 
         <div className={styles.comparison}>
           <div className={styles.card}>
-            <h4>Correto</h4>
-            <div className={styles.reference}>{symbol}</div>
+            <h4>Referência</h4>
+
+            <div className={styles.reference}>
+              {symbol}
+            </div>
           </div>
 
           <div className={styles.card}>
             <h4>Seu desenho</h4>
+
             <img
               src={userDrawing}
               className={styles.drawing}
@@ -63,58 +100,66 @@ export default function RoundScore({
           </div>
         </div>
 
-        <h2 className={styles.score}>{score}/100</h2>
-        <p className={styles.message}>{message}</p>
-
-        <div className={styles.info}>
-          <span>Traços: {strokeCount}</span>
-          <span>{difficulty}</span>
-        </div>
-
         <button
-          onClick={() => setShowDebug((v) => !v)}
+          onClick={() =>
+            setShowDebug((v) => !v)
+          }
           className={styles.debugButton}
         >
-          {showDebug ? "Ocultar Debug" : "Mostrar Debug"}
+          {showDebug
+            ? "Ocultar Debug"
+            : "Mostrar Debug"}
         </button>
 
         {showDebug && (
           <div className={styles.debug}>
-            <h3>Debug Completo</h3>
+            <h3>Debug</h3>
 
             <div className={styles.debugGrid}>
-              {/* 🖼 VISUAL */}
               <div>
-                <h4>Template (imagem)</h4>
-                <img src={debugData.templateImage} />
+                <h4>Template</h4>
+
+                <img
+                  src={debugData.templateImage}
+                  className={styles.debugImage}
+                />
               </div>
 
               <div>
-                <h4>User (imagem)</h4>
-                <img src={debugData.userImage} />
+                <h4>Usuário</h4>
+
+                <img
+                  src={debugData.userImage}
+                  className={styles.debugImage}
+                />
               </div>
 
-              {/* 🧠 ESTRUTURA REAL */}
               <div>
                 <h4>Template (Stroke[])</h4>
+
                 <pre>
-                  {JSON.stringify(debugData.template, null, 2)}
+                  {JSON.stringify(
+                    debugData.template,
+                    null,
+                    2
+                  )}
                 </pre>
               </div>
 
               <div>
                 <h4>User (Stroke[])</h4>
+
                 <pre>
-                  {JSON.stringify(debugData.user, null, 2)}
+                  {JSON.stringify(
+                    debugData.user,
+                    null,
+                    2
+                  )}
                 </pre>
               </div>
             </div>
           </div>
         )}
-
-        <button onClick={onNext} className={styles.button}>
-          Próximo
-        </button>
       </div>
     </div>
   );

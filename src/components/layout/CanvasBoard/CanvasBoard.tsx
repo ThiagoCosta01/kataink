@@ -89,22 +89,13 @@ export default function CanvasBoard({
     }
 
     ctx.scale(dpr, dpr);
+    configureBrush(ctx);
 
-    ctx.lineWidth = 18;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = "black";
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
 
-    ctx.shadowColor =
-      "rgba(0,0,0,0.15)";
-
-    ctx.shadowBlur = 2;
   }, []);
 
   function getPos(
-    event: React.MouseEvent<HTMLCanvasElement>
+    event: React.PointerEvent<HTMLCanvasElement>
   ) {
     const canvas = canvasRef.current!;
 
@@ -122,8 +113,24 @@ export default function CanvasBoard({
     };
   }
 
+  function configureBrush(
+    ctx: CanvasRenderingContext2D
+  ) {
+    ctx.lineWidth = 10;
+
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    ctx.strokeStyle = "#black";
+
+    ctx.shadowColor =
+      "rgba(0,0,0,0.08)";
+
+    ctx.shadowBlur = 4;
+  }
+
   const startDrawing = (
-    event: React.MouseEvent<HTMLCanvasElement>
+    event: React.PointerEvent<HTMLCanvasElement>
   ) => {
     const canvas = canvasRef.current;
 
@@ -155,7 +162,7 @@ export default function CanvasBoard({
   };
 
   const draw = (
-    event: React.MouseEvent<HTMLCanvasElement>
+    event: React.PointerEvent<HTMLCanvasElement>
   ) => {
     if (!drawing) {
       return;
@@ -176,22 +183,66 @@ export default function CanvasBoard({
 
     const pos = getPos(event);
 
-    ctx.lineTo(
-      pos.x * CANVAS_SIZE,
-      pos.y * CANVAS_SIZE
-    );
-    ctx.lineWidth = 10;
+    const points =
+      currentStroke.current.points;
 
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = "black";
+    if (points.length > 0) {
+      const last =
+        points[points.length - 1];
 
-    ctx.stroke();
+      const startX =
+        last.x * CANVAS_SIZE;
 
-    currentStroke.current.points.push(
-      pos
-    );
+      const startY =
+        last.y * CANVAS_SIZE;
+
+      const endX =
+        pos.x * CANVAS_SIZE;
+
+      const endY =
+        pos.y * CANVAS_SIZE;
+
+      const midX =
+        (startX + endX) / 2;
+
+      const midY =
+        (startY + endY) / 2;
+
+      const curveStrength = 0;
+
+      const controlX =
+        startX +
+        (midX - startX) *
+        curveStrength;
+
+      const controlY =
+        startY +
+        (midY - startY) *
+        curveStrength;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        startX,
+        startY
+      );
+
+      ctx.quadraticCurveTo(
+        controlX,
+        controlY,
+        endX,
+        endY
+      );
+
+      configureBrush(ctx);
+
+      ctx.stroke();
+    }
+
+    points.push(pos);
   };
+
+
 
   const stopDrawing = () => {
     if (!drawing) {
@@ -239,20 +290,36 @@ export default function CanvasBoard({
     };
   };
 
-  const redrawCanvas = (
-    remainingStrokes: Stroke[]
-  ) => {
+  function getCanvasContext() {
     const canvas = canvasRef.current;
 
     if (!canvas) {
-      return;
+      return null;
     }
 
     const ctx = canvas.getContext("2d");
 
     if (!ctx) {
+      return null;
+    }
+
+    return {
+      canvas,
+      ctx,
+    };
+  }
+
+  const redrawCanvas = (
+    remainingStrokes: Stroke[]
+  ) => {
+    const context =
+      getCanvasContext();
+
+    if (!context) {
       return;
     }
+
+    const { ctx } = context;
 
     ctx.clearRect(
       0,
@@ -261,36 +328,63 @@ export default function CanvasBoard({
       CANVAS_SIZE
     );
 
-    remainingStrokes.forEach((stroke) => {
-      if (stroke.points.length < 2) {
-        return;
+    configureBrush(ctx);
+
+    remainingStrokes.forEach(
+      (stroke) => {
+        const points =
+          stroke.points;
+
+        for (
+          let i = 1;
+          i < points.length;
+          i++
+        ) {
+          drawCurveSegment(
+            ctx,
+            points[i - 1],
+            points[i]
+          );
+        }
       }
-
-      ctx.beginPath();
-
-      ctx.moveTo(
-        stroke.points[0].x *
-        CANVAS_SIZE,
-        stroke.points[0].y *
-        CANVAS_SIZE
-      );
-
-      for (
-        let i = 1;
-        i < stroke.points.length;
-        i++
-      ) {
-        ctx.lineTo(
-          stroke.points[i].x *
-          CANVAS_SIZE,
-          stroke.points[i].y *
-          CANVAS_SIZE
-        );
-      }
-
-      ctx.stroke();
-    });
+    );
   };
+
+  function drawCurveSegment(
+    ctx: CanvasRenderingContext2D,
+    from: {
+      x: number;
+      y: number;
+    },
+    to: {
+      x: number;
+      y: number;
+    }
+  ) {
+    const midX =
+      ((from.x + to.x) / 2) *
+      CANVAS_SIZE;
+
+    const midY =
+      ((from.y + to.y) / 2) *
+      CANVAS_SIZE;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      from.x * CANVAS_SIZE,
+      from.y * CANVAS_SIZE
+    );
+
+    ctx.quadraticCurveTo(
+      from.x * CANVAS_SIZE,
+      from.y * CANVAS_SIZE,
+      midX,
+      midY
+    );
+
+    ctx.stroke();
+  }
 
   const clearLastStrokeCanvas = () => {
     if (strokes.length === 0) {
@@ -391,14 +485,14 @@ export default function CanvasBoard({
         <canvas
           ref={canvasRef}
           className={styles.canvas}
-          onMouseDown={
+          onPointerDown={
             startDrawing
           }
-          onMouseMove={draw}
-          onMouseUp={
+          onPointerMove={draw}
+          onPointerUp={
             stopDrawing
           }
-          onMouseLeave={
+          onPointerLeave={
             stopDrawing
           }
         />

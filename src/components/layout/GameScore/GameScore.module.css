@@ -7,7 +7,9 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
 
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  height: 100%;
 
+  max-height: 700px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -88,9 +90,16 @@
 .history {
   display: flex;
   flex-direction: column;
+
+  flex: 1;
+
+  min-height: 0;
+  max-height: 300px;
+
   gap: 10px;
 
   padding-top: 10px;
+
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -103,6 +112,7 @@
 
 .history ul {
   list-style: none;
+
   padding: 0;
   margin: 0;
 
@@ -111,6 +121,9 @@
   gap: 8px;
 
   overflow-y: auto;
+
+  flex: 1;
+  min-height: 0;
 
   scrollbar-width: thin;
 }
@@ -129,7 +142,6 @@
   justify-content: space-between;
 }
 
-/* destaque sutil por performance futura (opcional) */
 .history li:hover {
   background: #f9fafb;
 }
