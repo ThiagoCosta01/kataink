@@ -9,14 +9,15 @@
 - 01/06/2025 - Thiago Costa - Nota inicial de exemplo
 
 ## A fazer: 
-- instruções sobre como jogar (em about), 
-- terminar algoritmo de templates, 
-- finalizar no round 10, 
-- mandar configurações para o local storage 
+- Permitir desenho no celular
+- Mudar estilo da pincelada
+- Ajustar/limitar alturas máximas na PracticePage
+- Terminar algoritmo de templates
+- Finalizar no round 10
+- Mandar configurações para o local storage 
 - Adicionar multiplicação na pontuação para dificuldades e se tiver direção dos traços
-- ajustar/limitar alturas máximas na PracticePage
-- media queries
-- Hospedar
+- Instruções sobre como jogar (em about), 
+- Media queries
 - Refatorar
 
 ## A fazer (menos importantes):

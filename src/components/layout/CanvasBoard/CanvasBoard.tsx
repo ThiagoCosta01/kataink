@@ -94,6 +94,13 @@ export default function CanvasBoard({
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.strokeStyle = "black";
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    ctx.shadowColor =
+      "rgba(0,0,0,0.15)";
+
+    ctx.shadowBlur = 2;
   }, []);
 
   function getPos(
