@@ -12,12 +12,12 @@
 - Terminar algoritmo de templates
 
 ## Finalização: 
-- Instruções sobre como jogar (em about), 
 - Media queries
-- Refatorar
 
 
 ## A fazer (Extras Futuros):
+- Instruções sobre como jogar (em about)
+- Refatorar
 - i18n
 - documentação
 - adicionar áudio (menu shippuden) 

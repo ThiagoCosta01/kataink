@@ -1,8 +1,16 @@
 import { KATAKANAS } from "../../data/Katakanas";
 import type { Katakana } from "../../types/Katakana";
 
+const developmentMode = true;
+
 export function getAvailableKatakanas(): Katakana[] {
+  if (developmentMode) {
+    return KATAKANAS.filter(
+      (katakana) => katakana.template.length === 0
+    );
+  }
+
   return KATAKANAS.filter(
-    (k) => k.template && k.template.length > 0
+    (katakana) => katakana.template.length > 0
   );
 }

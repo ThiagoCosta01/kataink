@@ -412,7 +412,6 @@ export default function CanvasBoard({
         "Este katakana ainda não possui template."
       );
 
-      return;
     }
 
     const processedUser =
@@ -451,6 +450,8 @@ export default function CanvasBoard({
       ) || ""
     );
 
+
+
     setDebugData({
       user: processedUser,
       template: processedTemplate,
@@ -482,6 +483,64 @@ export default function CanvasBoard({
 
   };
 
+  const copyTemplate = () => {
+    if (strokes.length === 0) {
+      alert("Desenhe o katakana primeiro.");
+      return;
+    }
+
+    const template = resampleDrawing(
+      normalizeDrawing(
+        simplifyDrawing(strokes)
+      ),
+      32
+    );
+
+    const variableName = `${katakana.id}Template`;
+
+    const code = `import type { Stroke } from "../../types/Stroke";
+
+const ${variableName}: Stroke[] = ${JSON.stringify(
+      template,
+      null,
+      2
+    )};
+
+export default ${variableName};
+`;
+
+    const blob = new Blob([code], {
+      type: "text/typescript;charset=utf-8",
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `${katakana.id}.ts`;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+    copyToClipboard(`import ${katakana.id}Template from "./katakanaTemplates/${katakana.id}"`);
+  };
+
+  async function copyToClipboard(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+
+      console.log("Texto copiado!");
+    } catch (error) {
+      console.error("Erro ao copiar:", error);
+    }
+  }
+
   return (
     <>
       <div className={styles.container}>
@@ -501,6 +560,10 @@ export default function CanvasBoard({
         />
 
         <div className={styles.actions}>
+          <button onClick={copyTemplate}>
+            Copiar Template
+          </button>
+
           <button onClick={clearLastStrokeCanvas}>
             Desfazer
           </button>
@@ -511,6 +574,7 @@ export default function CanvasBoard({
           <button onClick={handleConfirm}>
             Confirmar
           </button>
+
         </div>
       </div>
 

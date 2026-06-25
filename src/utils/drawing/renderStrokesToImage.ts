@@ -2,7 +2,7 @@ import type { Stroke } from "../../types/Stroke";
 
 export function renderStrokesToImage(
   strokes: Stroke[],
-  size = 220
+  size = 400
 ): string {
   const canvas =
     document.createElement("canvas");
@@ -37,7 +37,7 @@ export function renderStrokesToImage(
   }
 
   ctx.strokeStyle = "black";
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 10;
   ctx.lineCap = "round";
 
   for (const stroke of strokes) {
