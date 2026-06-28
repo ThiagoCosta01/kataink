@@ -92,9 +92,34 @@ export default function CanvasBoard({
 
     ctx.scale(dpr, dpr);
     configureBrush(ctx);
-
-
+    drawGuide(ctx);
   }, []);
+
+
+  useEffect(() => {
+    const context = getCanvasContext();
+
+    if (!context) {
+      return;
+    }
+
+    const { ctx } = context;
+
+    ctx.clearRect(
+      0,
+      0,
+      CANVAS_SIZE,
+      CANVAS_SIZE
+    );
+
+    drawGuide(ctx);
+
+    setStrokes([]);
+
+    currentStroke.current = {
+      points: [],
+    };
+  }, [katakana]);
 
   function getPos(
     event: React.PointerEvent<HTMLCanvasElement>
@@ -280,15 +305,18 @@ export default function CanvasBoard({
     ctx.clearRect(
       0,
       0,
-      canvas.width,
-      canvas.height
+      CANVAS_SIZE,
+      CANVAS_SIZE
     );
+
 
     setStrokes([]);
 
     currentStroke.current = {
       points: [],
     };
+
+    drawGuide(ctx);
   };
 
   function getCanvasContext() {
@@ -329,6 +357,7 @@ export default function CanvasBoard({
       CANVAS_SIZE
     );
 
+    drawGuide(ctx);
     configureBrush(ctx);
 
     remainingStrokes.forEach(
@@ -483,6 +512,30 @@ export default function CanvasBoard({
 
   };
 
+  function drawGuide(
+    ctx: CanvasRenderingContext2D
+  ) {
+    if (settings.showDrawingGuide === false) {
+      return;
+    }
+
+    ctx.save();
+
+    ctx.font = "240px serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+
+    ctx.fillText(
+      katakana.symbol,
+      CANVAS_SIZE / 2,
+      CANVAS_SIZE / 2
+    );
+
+    ctx.restore();
+  }
+
   const copyTemplate = () => {
     if (strokes.length === 0) {
       alert("Desenhe o katakana primeiro.");
@@ -593,8 +646,6 @@ export default ${variableName};
         debugData={debugData}
         onNext={() => {
           setShowScore(false);
-
-          clearCanvas();
 
           setScore(null);
 

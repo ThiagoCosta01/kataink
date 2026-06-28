@@ -1,7 +1,7 @@
 import { KATAKANAS } from "../../data/Katakanas";
 import type { Katakana } from "../../types/Katakana";
 
-const developmentMode = true;
+const developmentMode = false;
 
 export function getAvailableKatakanas(): Katakana[] {
   if (developmentMode) {

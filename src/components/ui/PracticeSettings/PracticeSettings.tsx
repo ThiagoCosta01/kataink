@@ -21,11 +21,14 @@ export default function PracticeSettings({
       </h3>
 
       <label className={styles.option}>
+        <span>
+          Considerar direção dos traços
+        </span>
+
         <input
+          className={styles.switch}
           type="checkbox"
-          checked={
-            settings.respectStrokeDirection
-          }
+          checked={settings.respectStrokeDirection}
           onChange={(event) =>
             onChange({
               ...settings,
@@ -34,8 +37,25 @@ export default function PracticeSettings({
             })
           }
         />
+      </label>
 
-        Considerar direção dos traços
+      <label className={styles.option}>
+        <span>
+          Exibir guia de desenho
+        </span>
+
+        <input
+          className={styles.switch}
+          type="checkbox"
+          checked={settings.showDrawingGuide}
+          onChange={(event) =>
+            onChange({
+              ...settings,
+              showDrawingGuide:
+                event.target.checked,
+            })
+          }
+        />
       </label>
     </div>
   );

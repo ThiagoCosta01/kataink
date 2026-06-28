@@ -25,11 +25,11 @@ export default function Footer() {
           </div>
 
           <div className={styles.logoContainer}>
-            <Link to="https://github.com/thiagocosta/kataink" target="_blank" rel="noopener noreferrer">
+            <Link to="https://github.com/ThiagoCosta01/kataink" target="_blank" rel="noopener noreferrer">
               <FaGithub />
             </Link>
 
-            <Link to="https://github.com/ThiagoCosta01/kataink" target="_blank" rel="noopener noreferrer">
+            <Link to="https://www.linkedin.com/in/thiago-costa-dev/" target="_blank" rel="noopener noreferrer">
               <FaLinkedin />
             </Link>
           </div>
