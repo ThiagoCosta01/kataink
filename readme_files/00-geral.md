@@ -6,7 +6,7 @@
 
 **Versão em Desenvolvimento:** 0.0.1
 
-**Descrição:** Projeto desenvolvido para a Uninter
+**Descrição:** Projeto desenvolvido para o curso de ADS, da Uninter
 
 **Principais Tecnologias:** React, TypeScript, Fabric.js
 

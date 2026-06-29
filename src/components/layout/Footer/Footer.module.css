@@ -1,0 +1,87 @@
+.footer {
+  width: 100%;
+  margin-top: 34px;
+  background: var(--color-background-dark);
+}
+
+.content {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+  max-width: 80%;
+  gap: 14px;
+  margin: 0 auto;
+
+  padding: 24px 0px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.topContainer {
+
+  width: 100%;
+  display: flex;
+
+  justify-content: space-between;
+  flex-direction: row;
+
+}
+
+.brand,
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+.logo {
+  color: var(--color-primary);
+
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+}
+
+.logoContainer a svg {
+  size: 100px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.text,
+.info {
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 16px;
+}
+
+.separator {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .brand,
+  .info {
+    justify-content: center;
+  }
+}

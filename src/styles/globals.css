@@ -1,27 +1,111 @@
-body {
-  background-color: var(--background);
-  color: var(--text);
+/* Reset */
 
-  font-family:
-    Inter,
-    system-ui,
-    sans-serif;
-
-  min-height: 100vh;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+  background: var(--color-background-light);
+}
+
+html,
+body,
 #root {
   min-height: 100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: var(--container-width);
+body {
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
-  margin: 0 auto;
-  padding: 0 1rem;
+  line-height: 1.5;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  overflow-x: hidden;
 }
 
-html {
-  scroll-behavior: smooth;
+img,
+picture,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Variáveis globais */
+
+:root {
+  --color-primary: #AD2C36;
+
+  --color-secondary: #0A4E79;
+  --color-secondary-hover: #02253E;
+
+  --color-tertiary: #2cad4e;
+
+  --color-background-light: #E0D9E1;
+  --color-background-dark: #0F181F;
+
+  --color-text-dark: #111827;
+  --color-text-light: #ffffff;
+
+  --shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.08);
+
+  --shadow-md:
+    0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --shadow-lg:
+    0 20px 50px rgba(0, 0, 0, 0.16);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --transition:
+    0.2s ease;
 }

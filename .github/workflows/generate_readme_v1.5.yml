@@ -1,0 +1,75 @@
+name: Generate README from /readme_files
+# Version: 1.5
+# Description: generate main README.md from .md files in /readme_files - reapeats after every commit that updates /docs.
+# Last Update Changes: Added github action permission settings guidance.
+# Settings: 
+#   1. Settings → Actions → General: Read and write permissions, Allow GitHub Actions to create and approve pull requests
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+    paths:
+      - 'readme_files/**'
+  workflow_dispatch:
+
+jobs:
+  generate-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+
+    - name: Generate README
+      run: |
+        README_FILE="README.md"
+        DOCS_DIR="readme_files"
+
+        echo "" > $README_FILE
+
+
+        if [ -f "$DOCS_DIR/00-geral.md" ]; then
+          cat "$DOCS_DIR/00-geral.md" >> $README_FILE
+          echo "" >> $README_FILE
+        fi
+
+        echo "---" >> $README_FILE
+        echo "## 📑 Sumário" >> $README_FILE
+        echo "" >> $README_FILE
+
+        for FILE in $(ls $DOCS_DIR/*.md | grep -v "00-geral.md" | sort); do
+          BASENAME=$(basename "$FILE" .md)
+          TITLE=$(echo "$BASENAME" | sed -e 's/-/ /g' -e 's/\b\(.\)/\u\1/g')
+          echo "- [$TITLE](#$BASENAME)" >> $README_FILE
+        done
+        echo "" >> $README_FILE
+
+
+        for FILE in $(ls $DOCS_DIR/*.md | grep -v "00-geral.md" | sort); do
+          BASENAME=$(basename "$FILE" .md)
+          TITLE=$(echo "$BASENAME" | sed -e 's/-/ /g' -e 's/\b\(.\)/\u\1/g')
+
+          echo "" >> $README_FILE
+          echo "---" >> $README_FILE
+          echo "<details>" >> $README_FILE
+          echo "  <summary>📌 $TITLE</summary>" >> $README_FILE
+          echo "" >> $README_FILE
+
+          cat "$FILE" >> $README_FILE
+          echo "" >> $README_FILE
+          echo "</details>" >> $README_FILE
+        done
+
+
+    - name: Commit and push README
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add README.md
+        git commit -m "chore(readme_files): update README.md from /readme_files" || echo "No changes to commit"
+        git push origin HEAD
