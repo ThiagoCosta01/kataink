@@ -1,13 +1,9 @@
 import type { Katakana } from "../types/Katakana";
-import nTemplate from "./katakanaTemplates/n";
-import aTemplate from "./katakanaTemplates/a";
-import naTemplate from "./katakanaTemplates/na"
-
 
 export const KATAKANAS: Katakana[] = [
   // Vogais
   {
-    id: "a", symbol: "ア", strokeCount: 2, difficulty: "easy", template: aTemplate,
+    id: "a", symbol: "ア", strokeCount: 2, difficulty: "easy", template: [],
   },
   { id: "i", symbol: "イ", strokeCount: 2, difficulty: "easy", template: [] },
   { id: "u", symbol: "ウ", strokeCount: 3, difficulty: "easy", template: [] },
@@ -40,7 +36,7 @@ export const KATAKANAS: Katakana[] = [
   { id: "ni", symbol: "ニ", strokeCount: 2, difficulty: "easy", template: [] },
   { id: "nu", symbol: "ヌ", strokeCount: 2, difficulty: "medium", template: [] },
   { id: "ne", symbol: "ネ", strokeCount: 4, difficulty: "hard", template: [] },
-  { id: "no", symbol: "ノ", strokeCount: 1, difficulty: "easy", template: naTemplate },
+  { id: "no", symbol: "ノ", strokeCount: 1, difficulty: "easy", template: [] },
 
   // H
   { id: "ha", symbol: "ハ", strokeCount: 2, difficulty: "easy", template: [] },
@@ -74,6 +70,6 @@ export const KATAKANAS: Katakana[] = [
 
   // N
   {
-    id: "n", symbol: "ン", strokeCount: 2, difficulty: "medium", template: nTemplate,
+    id: "n", symbol: "ン", strokeCount: 2, difficulty: "medium", template: [],
   },
 ];

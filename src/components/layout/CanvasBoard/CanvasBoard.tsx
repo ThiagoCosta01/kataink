@@ -20,6 +20,7 @@ import { renderStrokesToImage } from "../../../utils/drawing/renderStrokesToImag
 import { KatakanaComparisonLogger } from "../../../utils/drawing/KatakanaComparisonLogger";
 
 import RoundScore from "../../ui/RoundScore/RoundScore";
+import { ensureTemplate } from "../../../utils/katakana/katakanaTemplate";
 
 const CANVAS_SIZE = 400;
 
@@ -429,19 +430,9 @@ export default function CanvasBoard({
     redrawCanvas(remainingStrokes);
   };
 
-  const handleConfirm = () => {
-    const template =
-      katakana.template;
+  const handleConfirm = async () => {
+    const template = await ensureTemplate(katakana);
 
-    if (
-      !template ||
-      template.length === 0
-    ) {
-      alert(
-        "Este katakana ainda não possui template."
-      );
-
-    }
 
     const processedUser =
       resampleDrawing(
