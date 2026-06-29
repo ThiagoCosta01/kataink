@@ -604,7 +604,7 @@ export default ${variableName};
         />
 
         <div className={styles.actions}>
-          <button onClick={copyTemplate}>
+          <button className={styles.templateButton} onClick={copyTemplate}>
             Copiar Template
           </button>
 

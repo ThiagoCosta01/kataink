@@ -2,38 +2,33 @@ import type { Stroke } from "../types/Stroke";
 
 const modules = import.meta.glob("./katakanaTemplates/*.ts");
 
-console.log("Templates encontrados:");
-console.log(Object.keys(modules));
-
 const cache = new Map<string, Stroke[]>();
 
-export async function loadTemplate(id: string): Promise<Stroke[]> {
-  console.log("Carregando:", id);
+export const AVAILABLE_TEMPLATES = new Set(
+  Object.keys(modules).map(path =>
+    path
+      .split("/")
+      .pop()!
+      .replace(".ts", "")
+  )
+);
 
+export async function loadTemplate(id: string): Promise<Stroke[]> {
   const cached = cache.get(id);
 
   if (cached) {
-    console.log("Veio do cache");
     return cached;
   }
 
-  const path = `./katakanaTemplates/${id}.ts`;
-
-  console.log("Procurando:", path);
-
-  const loader = modules[path];
+  const loader = modules[`./katakanaTemplates/${id}.ts`];
 
   if (!loader) {
-    console.error("Template não encontrado!");
-    console.log(Object.keys(modules));
     return [];
   }
 
-  const module = await loader() as {
+  const module = (await loader()) as {
     default: Stroke[];
   };
-
-  console.log("Template carregado:", module.default.length);
 
   cache.set(id, module.default);
 

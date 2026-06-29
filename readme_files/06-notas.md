@@ -9,7 +9,6 @@
 - 01/06/2025 - Thiago Costa - Nota inicial de exemplo
 
 ## A fazer: 
-- Terminar de desenhar templates
 - Bug de desfazer
 - Bug de traço que gira
 - Melhorar loading inicial

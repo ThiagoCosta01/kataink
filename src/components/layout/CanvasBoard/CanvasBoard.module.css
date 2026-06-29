@@ -4,6 +4,7 @@
   align-items: center;
   gap: 18px;
 }
+
 .canvas {
   width: 400px;
   height: 400px;
@@ -11,15 +12,11 @@
   display: block;
 
   background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.07) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
+    linear-gradient(rgba(0, 0, 0, 0.07) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
       rgba(0, 0, 0, 0.06) 1px,
-      transparent 1px
-    ),
+      transparent 1px),
     #fff;
 
   background-size: 40px 40px;
@@ -44,6 +41,7 @@
   width: 100%;
 
   display: flex;
+  flex-direction: row-reverse;
   justify-content: center;
   gap: 12px;
 }
@@ -87,4 +85,9 @@
 
 .actions button:last-child:hover {
   background: var(--color-secondary-hover);
+}
+
+.templateButton {
+  background-color: red;
+  color: whitesmoke;
 }
