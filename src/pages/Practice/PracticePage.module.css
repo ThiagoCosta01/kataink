@@ -1,13 +1,13 @@
 .container {
-
   width: 100%;
-  margin-top: 34px;
+  display: flex;
+  justify-content: center;
 }
 
 .content {
-
+  margin: 18px;
   gap: 24px;
-
+  width: 80%;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -16,17 +16,17 @@
 
 .katakanaBox {
   padding: 14px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 
   border-radius: 24px;
-  background:
-    linear-gradient(185deg,
+
+  background: linear-gradient(185deg,
       #ffffffb1,
       #a9aebd3a);
-
 }
 
 .katakana {
@@ -41,17 +41,15 @@
 
   color: var(--color-primary);
 
-  background:
-    linear-gradient(180deg,
+  background: linear-gradient(180deg,
       #ffffff,
       #f7f7f7);
 
   border-radius: 24px;
 
-  border: 2px solid rgba(173, 44, 54, .15);
+  border: 2px solid rgba(173, 44, 54, 0.15);
 
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, .08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .info {
@@ -72,6 +70,7 @@
 .katanaId {
   font-size: 1.2rem;
   font-weight: 600;
+
   color: var(--color-text-dark);
   text-transform: uppercase;
 }
@@ -81,36 +80,36 @@
 
   border-radius: 12px;
 
-  background:
-    rgb(255, 255, 255);
+  background: #fff;
 
-  border:
-    1px solid rgba(10, 78, 121, .15);
+  border: 1px solid rgba(10, 78, 121, 0.15);
 
-  color:
-    var(--color-text-dark);
-
+  color: var(--color-text-dark);
 }
 
 .boardBox {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+
   padding: 24px;
-  max-height: fit-content;
+
   border-radius: 24px;
 
-  background:
-    linear-gradient(180deg,
+  background: linear-gradient(180deg,
       #ffffff,
       #fafafa);
 
-  border:
-    1px solid rgba(2, 37, 62, .08);
+  border: 1px solid rgba(2, 37, 62, 0.08);
 
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .9);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  overflow: hidden;
 }
 
-.scoreBox {
-  
+.boardBox>* {
+  width: 100%;
 }
 
 canvas {
@@ -160,12 +159,13 @@ canvas {
   }
 
   .content {
-    gap: 16px;
+    margin: 8px;
+    gap: 12px;
   }
 
   .katakanaBox {
     padding: 16px;
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .katakana {
@@ -184,8 +184,8 @@ canvas {
   }
 
   .boardBox {
-    padding: 16px;
-    overflow-x: auto;
+    padding: 12px;
+    border-radius: 20px;
   }
 
   .scoreBox {
@@ -194,10 +194,21 @@ canvas {
 }
 
 @media (max-width: 480px) {
+  .content {
+    margin: 4px;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .katakanaBox {
+    padding: 12px;
+    gap: 14px;
+  }
+
   .katakana {
-    width: 120px;
-    height: 120px;
-    font-size: 4rem;
+    width: 100px;
+    height: 100px;
+    font-size: 3.5rem;
   }
 
   .katanaId {
@@ -205,15 +216,18 @@ canvas {
   }
 
   .badge {
+    padding: 8px 10px;
     font-size: 0.85rem;
     text-align: center;
   }
 
   .boardBox {
-    padding: 12px;
+    padding: 8px;
+    border-radius: 16px;
   }
 
   .canvas {
+    width: 100%;
     max-width: 100%;
     height: auto;
   }

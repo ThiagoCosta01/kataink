@@ -3,20 +3,19 @@
   flex-direction: column;
   align-items: center;
   gap: 18px;
+
+  width: 100%;
 }
 
 .canvas {
-  width: 400px;
-  height: 400px;
+  width: min(400px, 100%);
+  aspect-ratio: 1;
 
   display: block;
 
   background:
-    linear-gradient(rgba(0, 0, 0, 0.07) 1px,
-      transparent 1px),
-    linear-gradient(90deg,
-      rgba(0, 0, 0, 0.06) 1px,
-      transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
     #fff;
 
   background-size: 40px 40px;
@@ -31,7 +30,6 @@
 }
 
 .canvas:hover {
-
   box-shadow:
     0 20px 45px rgba(0, 0, 0, 0.10),
     0 6px 15px rgba(0, 0, 0, 0.06);
@@ -41,16 +39,15 @@
   width: 100%;
 
   display: flex;
-  flex-direction: row-reverse;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
 .actions button {
   min-width: 120px;
 
-
-  padding: 10px 10px;
+  padding: 10px;
 
   border: none;
   border-radius: 12px;
@@ -79,8 +76,7 @@
   background: var(--color-secondary);
   color: white;
 
-  box-shadow:
-    0 8px 20px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
 }
 
 .actions button:last-child:hover {
@@ -88,6 +84,67 @@
 }
 
 .templateButton {
-  background-color: red;
+  background: red;
   color: whitesmoke;
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 14px;
+  }
+
+  .canvas {
+    width: min(360px, 100%);
+  }
+
+  .actions {
+    gap: 10px;
+  }
+
+  .actions button {
+    min-width: 100px;
+    padding: 9px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: 12px;
+  }
+
+  .canvas {
+    width: min(320px, 100%);
+    border-radius: 10px;
+  }
+
+  .actions {
+    gap: 8px;
+  }
+
+  .actions button {
+    flex: 1 1 140px;
+    min-width: 0;
+    padding: 9px 6px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .canvas {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .actions button {
+    flex: 1 1 14px;
+    min-width: 0;
+    padding: 9px 6px;
+    font-size: 0.85rem;
+
+  }
 }

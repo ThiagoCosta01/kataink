@@ -9,7 +9,7 @@ export default function Header() {
         <Link to="/" className={styles.brand}>
           <div className={styles.text}>
             <h1>KataInk</h1>
-            <span>Prática de Escrita Katakana</span>
+            <span>Prática de Katakana</span>
           </div>
         </Link>
 

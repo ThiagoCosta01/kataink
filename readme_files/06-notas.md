@@ -10,14 +10,9 @@
 
 ## A fazer: 
 - Bug de desfazer
-- Bug de traço que gira
-- Melhorar loading inicial
-
-## Finalização: 
-- Media queries
-
 
 ## A fazer (Extras Futuros):
+- Bug de traço que gira (ocorre ao desenhar traços retos)
 - Instruções sobre como jogar (em about)
 - Refatorar
 - i18n

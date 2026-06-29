@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./RoundScore.module.css";
 
 import type { Stroke } from "../../../types/Stroke";
+import { DEFAULT_SYSTEM_SETTINGS } from "../../../config/SystemSettings";
 
 type Props = {
   open: boolean;
@@ -104,16 +105,18 @@ export default function RoundScore({
           </div>
         </div>
 
-        <button
-          onClick={() =>
-            setShowDebug((v) => !v)
-          }
-          className={styles.debugButton}
-        >
-          {showDebug
-            ? "Ocultar Debug"
-            : "Mostrar Debug"}
-        </button>
+        {DEFAULT_SYSTEM_SETTINGS.devMode && (
+          <button
+            onClick={() =>
+              setShowDebug((v) => !v)
+            }
+            className={styles.debugButton}
+          >
+            {showDebug
+              ? "Ocultar Debug"
+              : "Mostrar Debug"}
+          </button>
+        )}
 
         {showDebug && (
           <div className={styles.debug}>

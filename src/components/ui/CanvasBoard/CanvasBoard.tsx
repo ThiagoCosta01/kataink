@@ -19,8 +19,9 @@ import { renderStrokesToImage } from "../../../utils/drawing/renderStrokesToImag
 
 import { KatakanaComparisonLogger } from "../../../utils/drawing/KatakanaComparisonLogger";
 
-import RoundScore from "../../ui/RoundScore/RoundScore";
+import RoundScore from "../RoundScore/RoundScore";
 import { ensureTemplate } from "../../../utils/katakana/katakanaTemplate";
+import { DEFAULT_SYSTEM_SETTINGS } from "../../../config/SystemSettings";
 
 const CANVAS_SIZE = 400;
 
@@ -604,9 +605,14 @@ export default ${variableName};
         />
 
         <div className={styles.actions}>
-          <button className={styles.templateButton} onClick={copyTemplate}>
-            Copiar Template
-          </button>
+          {DEFAULT_SYSTEM_SETTINGS.devMode && (
+            <button
+              className={styles.templateButton}
+              onClick={copyTemplate}
+            >
+              Copiar Template
+            </button>
+          )}
 
           <button onClick={clearLastStrokeCanvas}>
             Desfazer

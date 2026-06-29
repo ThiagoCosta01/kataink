@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import styles from "./PracticePage.module.css";
 
-import CanvasBoard from "../../components/layout/CanvasBoard/CanvasBoard";
+import CanvasBoard from "../../components/ui/CanvasBoard/CanvasBoard";
 import PracticeSettings from "../../components/ui/PracticeSettings/PracticeSettings";
-import GameScore from "../../components/layout/GameScore/GameScore";
+import GameScore from "../../components/ui/GameScore/GameScore";
 
 import { getAvailableKatakanas } from "../../utils/katakana/getAvailableKatakanas";
 

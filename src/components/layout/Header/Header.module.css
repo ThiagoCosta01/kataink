@@ -3,20 +3,24 @@
   padding: 6px 0;
 
   display: flex;
-  align-items: center;
   justify-content: center;
 
-  background-color: var(--color-background-dark);
+  background: var(--color-background-dark);
   border-bottom: 1px solid #e5e7eb;
-  color: rgba(255, 255, 255, 0.915);
+  color: rgba(255,255,255,.92);
 }
 
 .content {
+ width: 80%;
   display: flex;
   align-items: center;
-  width: 80%;
   justify-content: space-between;
-  gap: 10px;
+  gap: 1rem;
+}
+
+.brand {
+  text-decoration: none;
+  color: inherit;
 }
 
 .text {
@@ -24,27 +28,22 @@
   flex-direction: column;
 }
 
+.text h1 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--color-text-light);
+}
+
 .text h1:hover {
   color: var(--color-primary);
 }
 
-
-.text h1 {
-  margin: 0;
-
-  font-size: 2rem;
-  font-weight: 800;
-  line-height: 1;
-
-  color: var(--color-text-light);
-}
-
 .text span {
-  margin-top: 0.2rem;
-
-  font-size: 0.8rem;
-
-  color: rgba(255, 255, 255, 0.712);
+  margin-top: 2px;
+  font-size: .8rem;
+  color: rgba(255,255,255,.72);
 }
 
 .nav {
@@ -54,12 +53,10 @@
 }
 
 .link {
-  font-size: 0.95rem;
+  font-size: .95rem;
   font-weight: 500;
-
   text-decoration: none;
-
-  transition: color 0.2s ease;
+  transition: color .2s;
 }
 
 .link:hover {
@@ -67,31 +64,57 @@
 }
 
 @media (max-width: 768px) {
-  .header {
-    height: auto;
-    padding: 1rem;
+  .content {
+    width: 90%;
+  }
 
+  .text h1 {
+    font-size: 1.6rem;
+  }
+
+  .text span {
+    font-size: .72rem;
+  }
+
+  .nav {
+    gap: 1.2rem;
+  }
+
+  .link {
+    font-size: .9rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .content {
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+    width: 100%;
   }
 
   .text {
     align-items: center;
+    text-align: center;
   }
 
   .text h1 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
 
   .text span {
-    font-size: 0.75rem;
+    margin-top: 1px;
+    font-size: .65rem;
   }
 
   .nav {
-    gap: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .link {
-    font-size: 0.9rem;
+    font-size: .85rem;
   }
 }
