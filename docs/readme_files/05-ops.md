@@ -7,6 +7,13 @@
 **Processos**:
 
 - Atualizar README.md principal automaticamente
-    - Arquivo: `generate_readme[version].yml`
-    - Funcionalidade: atualiza o README.md da raíz do repositório sempre que algum arquivo localizado em `readme_files/` for alterado
-    - Branches: todas, com exceção da principal
+  - Arquivo: `generate_readme.yml`
+  - Funcionalidade: atualiza o README.md da raíz do repositório sempre que algum arquivo localizado em `readme_files/` for alterado
+  - Branches: todas, com exceção da principal
+
+  ## CD
+
+- Deploy do build automaticamente
+  - Arquivo: `deploy_ghpages_vite.yml`
+  - Funcionalidade: gera o build em dist/ e envia para o github pages
+  - Branches: somente na principal

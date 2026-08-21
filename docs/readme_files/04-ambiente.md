@@ -1,7 +1,9 @@
 # Preparação do Ambiente
 
-## Ambiente de Desenvolvimento:
+## Ambiente de Desenvolvimento
 
-1. **npm run dev** 
+ **npm run dev:** roda a aplicação no localhost.
 
+## Ambiente de Deploy
 
+A aplicação é enviada ao github pages por meio de merge na branch main (deve passar pela branch develop antes.)
