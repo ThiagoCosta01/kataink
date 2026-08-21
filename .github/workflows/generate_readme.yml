@@ -1,7 +1,7 @@
-name: Generate README from /readme_files
-# Version: 1.5
-# Description: generate main README.md from .md files in /readme_files - reapeats after every commit that updates /docs.
-# Last Update Changes: Added github action permission settings guidance.
+name: generate_readme
+# Version: 1.6
+# Description: generate main README.md from .md files in /docs - reapeats after every commit that updates /docs.
+# Last Update Changes: Added html tag anchor.
 # Settings: 
 #   1. Settings → Actions → General: Read and write permissions, Allow GitHub Actions to create and approve pull requests
 
@@ -11,7 +11,7 @@ on:
       - main
       - master
     paths:
-      - 'readme_files/**'
+      - 'docs/readme_files/**'
   workflow_dispatch:
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
     - name: Generate README
       run: |
         README_FILE="README.md"
-        DOCS_DIR="readme_files"
+        DOCS_DIR="docs/readme_files"
 
         echo "" > $README_FILE
 
@@ -56,6 +56,7 @@ jobs:
 
           echo "" >> $README_FILE
           echo "---" >> $README_FILE
+          echo "<a id=\"$BASENAME\"></a>" >> "$README_FILE"
           echo "<details>" >> $README_FILE
           echo "  <summary>📌 $TITLE</summary>" >> $README_FILE
           echo "" >> $README_FILE
