@@ -1,21 +1,16 @@
 # Práticas Para Desenvolvimento do Sistema
 
-# Segurança
-- Caso uso de `variáveis de Ambiente`, devem ser adicionadas ao `.gitignore`
+## Segurança
 
-
-# Convenções de Desenvolvimento
+- Caso uso de `variáveis de Ambiente`, `senhas` ou `arquivos confidenciais`, devem ser adicionadas ao `.gitignore`
 
 ## Commits
+
 - Seguir Conventional Commits
-    - `<tipo>(<escopo opcional>): <descrição curta>`
-    - De preferência em `Inglês` e na `3ª pessoa do singular` (it does), para padronização
+  - `<tipo>(<escopo opcional>): <descrição curta>`
+  - De preferência em `Inglês` e na `3ª pessoa do singular` para padronização
 
 - Exemplos:
-  - feat(auth): adds login OAuth
-  - fix(api): corrects validation bug
-  - docs: updates doc file x
-
-## Padrões
-
-### Linguagem:
+  - feat(auth): add login OAuth
+  - fix(api): correct validation bug
+  - docs: update doc file x

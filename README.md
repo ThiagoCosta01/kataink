@@ -3,7 +3,7 @@
 
 **Nome do Projeto:** KataInk
 
-**Última Versão Lançada:** Em desenvolvimento 
+**Última Versão Lançada:** Em desenvolvimento
 
 **Versão em Desenvolvimento:** 0.0.1
 
@@ -11,18 +11,11 @@
 
 **Principais Tecnologias:** React, TypeScript, Fabric.js
 
-# Links Úteis:
+## Links Úteis
 
-**Documentação:** 
-https://thiago10lscbf-1780589979319.atlassian.net/wiki/spaces/SCRUM/pages/98435/Documenta+o?atlOrigin=eyJpIjoiOTQ5MWZhNjY2NTQyNDBjZWFkODI1MzBmMTg3MWI3ZGEiLCJwIjoiaiJ9
+[Documentação Jira](https://thiago10lscbf-1780589979319.atlassian.net/wiki/spaces/SCRUM/pages/98435/Documenta+o?atlOrigin=eyJpIjoiOTQ5MWZhNjY2NTQyNDBjZWFkODI1MzBmMTg3MWI3ZGEiLCJwIjoiaiJ9)
 
-**Tasks**:
-https://thiago10lscbf-1780589979319.atlassian.net/jira/software/projects/SCRUM/boards/1
-
-**Design:**
-https://www.figma.com/design/qBSfiBJQ0ZGomvaO2k4DU7/Pessoais?node-id=0-1&p=f&t=NpM7mz0B3C3y427y-0
-
-
+[Design Figma](https://www.figma.com/design/qBSfiBJQ0ZGomvaO2k4DU7/Pessoais?node-id=0-1&p=f&t=NpM7mz0B3C3y427y-0)
 
 ---
 ## 📑 Sumário
@@ -44,6 +37,8 @@ https://www.figma.com/design/qBSfiBJQ0ZGomvaO2k4DU7/Pessoais?node-id=0-1&p=f&t=N
 
 ## Descrição
 
+React foi escolhido para construção da interface e TypeScript para fornecer tipagem estática e maior segurança durante o desenvolvimento.
+
 </details>
 
 ---
@@ -53,25 +48,21 @@ https://www.figma.com/design/qBSfiBJQ0ZGomvaO2k4DU7/Pessoais?node-id=0-1&p=f&t=N
 
 # Práticas Para Desenvolvimento do Sistema
 
-# Segurança
-- Caso uso de `variáveis de Ambiente`, devem ser adicionadas ao `.gitignore`
+## Segurança
 
-
-# Convenções de Desenvolvimento
+- Caso uso de `variáveis de Ambiente`, `senhas` ou `arquivos confidenciais`, devem ser adicionadas ao `.gitignore`
 
 ## Commits
+
 - Seguir Conventional Commits
-    - `<tipo>(<escopo opcional>): <descrição curta>`
-    - De preferência em `Inglês` e na `3ª pessoa do singular` (it does), para padronização
+  - `<tipo>(<escopo opcional>): <descrição curta>`
+  - De preferência em `Inglês` e na `3ª pessoa do singular` para padronização
 
 - Exemplos:
-  - feat(auth): adds login OAuth
-  - fix(api): corrects validation bug
-  - docs: updates doc file x
+  - feat(auth): add login OAuth
+  - fix(api): correct validation bug
+  - docs: update doc file x
 
-## Padrões
-
-### Linguagem:
 </details>
 
 ---
@@ -83,22 +74,16 @@ https://www.figma.com/design/qBSfiBJQ0ZGomvaO2k4DU7/Pessoais?node-id=0-1&p=f&t=N
 
 ## Raíz do Repositório
 
-```
+```bash
 Project-Root/
-├─ apps/ # Aplicativos do Repositório
+├─ src/ # Código fonte
 ├─ docs/ # Documentação do Repositório
-├─ infra/ # Arquivos de configuração, preparação do ambiente e scripts de apoio
+├─ infra/ # scripts de apoio
 ├─ .github/workflows/ # Scripts de CI/CD
 ├─ .gitignore # Arquivos a serem ignorados em todos commits
 ├─ README.md # Documentação integral feita a partir dos arquivos de /docs
 ```
 
-## Apps
-```
-apps/(nome do app)
-├── src/ # Código-fonte principal
-
-```
 </details>
 
 ---
@@ -108,11 +93,13 @@ apps/(nome do app)
 
 # Preparação do Ambiente
 
-## Ambiente de Desenvolvimento:
+## Ambiente de Desenvolvimento
 
-1. **npm run dev** 
+ **npm run dev:** roda a aplicação no localhost.
 
+## Ambiente de Deploy
 
+A aplicação é enviada ao github pages por meio de merge na branch main (deve passar pela branch develop antes.)
 
 </details>
 
@@ -130,9 +117,17 @@ apps/(nome do app)
 **Processos**:
 
 - Atualizar README.md principal automaticamente
-    - Arquivo: `generate_readme[version].yml`
-    - Funcionalidade: atualiza o README.md da raíz do repositório sempre que algum arquivo localizado em `readme_files/` for alterado
-    - Branches: todas, com exceção da principal
+  - Arquivo: `generate_readme.yml`
+  - Funcionalidade: atualiza o README.md da raíz do repositório sempre que algum arquivo localizado em `readme_files/` for alterado
+  - Branches: todas, com exceção da principal
+
+  ## CD
+
+- Deploy do build automaticamente
+  - Arquivo: `deploy_ghpages_vite.yml`
+  - Funcionalidade: gera o build em dist/ e envia para o github pages
+  - Branches: somente na principal
+
 </details>
 
 ---
@@ -150,18 +145,17 @@ apps/(nome do app)
 
 - 01/06/2025 - Thiago Costa - Nota inicial de exemplo
 
-## A fazer: 
-- Bug de desfazer
+## A fazer (Extras Futuros)
 
-## A fazer (Extras Futuros):
 - Bug de traço que gira (ocorre ao desenhar traços retos)
 - Instruções sobre como jogar (em about)
 - Refatorar
 - i18n
 - documentação
-- adicionar áudio (menu shippuden) 
+- adicionar áudio (menu shippuden)
 - modo sem símbolo (desenhar com base nos nomes dos Katakanas)
-- Mandar configurações para o local storage 
+- Mandar configurações para o local storage
 - Mudar estilo da pincelada (Perfect)
-- Adicionar multiplicação na pontuação para dificuldades e se tiver direção dos traços
+- Adicionar multiplicação na pontuação para dificuldades e se tiver direção dos traço
+
 </details>

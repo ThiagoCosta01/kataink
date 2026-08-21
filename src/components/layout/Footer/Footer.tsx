@@ -44,9 +44,12 @@ export default function Footer() {
             •
           </span>
 
-          <span>
-            Desenvolvido por Thiago Costa
-          </span>
+          <Link to="https://thiagocostadev.com/" target="_blank" rel="noopener noreferrer">
+            <span>
+              Desenvolvido por Thiago Costa
+            </span>
+          </Link>
+
         </div>
 
       </div>
